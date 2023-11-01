@@ -27,11 +27,15 @@ export const Post = () => {
           Acabei de subir mais um projeto no meu portifa. É um projeto que fiz
           no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀
         </p>
+        {/* no html do react ele ignora os espacos e deixa o emoction abaixo grudado
+        da ancora, uma alternativa ao css e usar{" "} */}
         <p>
           👉 <a href="">jane.design/doctorcare</a>
         </p>
         <p>
-          <a href="">#novoprojeto #nlw #rocketseat</a>
+          <a href="">#novoprojeto </a>
+          <a href=""> #nlw </a>
+          <a href=""> #rocketseat</a>
         </p>
       </div>
     </article>
