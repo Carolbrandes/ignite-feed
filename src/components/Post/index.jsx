@@ -27,8 +27,7 @@ export const Post = () => {
           Acabei de subir mais um projeto no meu portifa. É um projeto que fiz
           no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀
         </p>
-        {/* no html do react ele ignora os espacos e deixa o emoction abaixo grudado
-        da ancora, uma alternativa ao css e usar{" "} */}
+
         <p>
           👉 <a href="">jane.design/doctorcare</a>
         </p>
@@ -38,6 +37,14 @@ export const Post = () => {
           <a href=""> #rocketseat</a>
         </p>
       </div>
+
+      <form className={styles.commentForm}>
+        <strong>Deixe seu feedback</strong>
+        <textarea placeholder="Deixe um comentário" />
+        <footer>
+          <button type="submit">Publicar</button>
+        </footer>
+      </form>
     </article>
   );
 };
