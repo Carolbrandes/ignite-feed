@@ -2,16 +2,22 @@ import { Avatar } from "../Avatar";
 import { Comment } from "../Comment";
 import styles from "./style.module.css";
 
-export const Post = () => {
+export const Post = ({
+  post: {
+    author: { avatarUrl, name, role },
+    content,
+    publishedAt,
+  },
+}) => {
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar src="https://avatars.githubusercontent.com/u/45435565?v=4" />
+          <Avatar src={avatarUrl} />
 
           <div className={styles.authorInfo}>
-            <strong>CarolB</strong>
-            <span>Front End Developer</span>
+            <strong>{name}</strong>
+            <span>{role}</span>
           </div>
         </div>
 
