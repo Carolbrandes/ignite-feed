@@ -3,6 +3,7 @@ import { Comment } from "../Comment";
 import { format, formatDistanceToNow } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import styles from "./style.module.css";
+import { useState } from "react";
 
 export const Post = ({
   post: {
@@ -11,6 +12,9 @@ export const Post = ({
     publishedAt,
   },
 }) => {
+  const [contentTextArea, setContentTextArea] = useState("");
+  const [comments, setComments] = useState([""]);
+
   const publishedDateFormatted = format(
     publishedAt,
     "d 'de' LLLL 'ás' HH:mm'h'",
@@ -23,6 +27,15 @@ export const Post = ({
     locale: ptBR,
     addSuffix: true,
   });
+
+  function handleChange(event) {
+    setContentTextArea(event.target.value);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    setComments([...comments, contentTextArea]);
+  }
 
   return (
     <article className={styles.post}>
@@ -46,29 +59,32 @@ export const Post = ({
 
       <div className={styles.content}>
         {content.map((line) => {
-          if (line.type === "paragraph") return <p>{line.content}</p>;
+          if (line.type === "paragraph")
+            return <p key={line.content}>{line.content}</p>;
           else if (line.type === "link")
             return (
-              <p>
+              <p key={line.content}>
                 <a href="#">{line.content}</a>
               </p>
             );
         })}
       </div>
 
-      <form className={styles.commentForm}>
+      <form onSubmit={handleSubmit} className={styles.commentForm}>
         <strong>Deixe seu feedback</strong>
-        <textarea placeholder="Deixe um comentário" />
+        <textarea onChange={handleChange} placeholder="Deixe um comentário" />
         <footer>
           <button type="submit">Publicar</button>
         </footer>
       </form>
 
-      <div className={styles.commentList}>
-        <Comment />
-        <Comment />
-        <Comment />
-      </div>
+      {comments.length > 0 && (
+        <div className={styles.commentList}>
+          {comments.map((c) => (
+            <Comment key={c} content={c} />
+          ))}
+        </div>
+      )}
     </article>
   );
 };
