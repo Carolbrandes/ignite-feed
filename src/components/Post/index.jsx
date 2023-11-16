@@ -37,6 +37,10 @@ export const Post = ({
     setComments([...comments, contentTextArea]);
   }
 
+  function deleteComment(commentToDelete) {
+    setComments(comments.filter(comment => comment !== commentToDelete))
+  }
+
   return (
     <article className={styles.post}>
       <header>
@@ -81,7 +85,7 @@ export const Post = ({
       {comments.length > 0 && (
         <div className={styles.commentList}>
           {comments.map((c) => (
-            <Comment key={c} content={c} />
+            <Comment key={c} content={c} onDeleteComment={deleteComment} />
           ))}
         </div>
       )}
