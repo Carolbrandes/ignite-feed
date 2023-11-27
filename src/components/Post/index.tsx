@@ -3,7 +3,25 @@ import { Comment } from "../Comment";
 import { format, formatDistanceToNow } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import styles from "./style.module.css";
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
+
+export interface PostType {
+  id: number
+  author: {
+    name: string;
+    role: string;
+    avatarUrl: string;
+  };
+  publishedAt: Date;
+  content: Array<{
+    type: "paragraph" | "link";
+    text: string;
+  }>;
+}
+
+interface PostProps {
+  post: PostType
+}
 
 export const Post = ({
   post: {
@@ -11,7 +29,7 @@ export const Post = ({
     content,
     publishedAt,
   },
-}) => {
+}: PostProps) => {
   const [contentTextArea, setContentTextArea] = useState("");
   const [comments, setComments] = useState([""]);
 
@@ -28,25 +46,30 @@ export const Post = ({
     addSuffix: true,
   });
 
-  function handleChange(event) {
+  function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setContentTextArea(event.target.value);
   }
 
-  function handleSubmit(event) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setComments([...comments, contentTextArea]);
-    event.target.setCustomValidity("");
+
+    if (isNewCommentempty) {
+      event.currentTarget.reportValidity();
+    } else {
+      setComments([...comments, contentTextArea]);
+      event.currentTarget.reset(); // Reset the form
+    }
   }
 
-  function deleteComment(commentToDelete) {
+  function deleteComment(commentToDelete: string) {
     setComments(comments.filter((comment) => comment !== commentToDelete));
   }
 
-  function handleNewCommentInvalid() {
+  function handleNewCommentInvalid(event: ChangeEvent<HTMLTextAreaElement>) {
     event.target.setCustomValidity("Esse campo é obrigatório");
   }
 
-  const isNewCommentempty = contentTextArea.length === 0
+  const isNewCommentempty = contentTextArea.length === 0;
 
   return (
     <article className={styles.post}>
@@ -71,11 +94,11 @@ export const Post = ({
       <div className={styles.content}>
         {content.map((line) => {
           if (line.type === "paragraph")
-            return <p key={line.content}>{line.content}</p>;
+            return <p key={line.text}>{line.text}</p>;
           else if (line.type === "link")
             return (
-              <p key={line.content}>
-                <a href="#">{line.content}</a>
+              <p key={line.text}>
+                <a href="#">{line.text}</a>
               </p>
             );
         })}

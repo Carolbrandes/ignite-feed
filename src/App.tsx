@@ -2,9 +2,9 @@ import { Header } from "./components/Header";
 import styles from "./App.module.css";
 import "./global.css";
 import { Sidebar } from "./components/Sidebar";
-import { Post } from "./components/Post";
+import { Post, PostType } from "./components/Post";
 
-const posts = [
+const posts: PostType[] = [
   {
     id: 1,
     author: {
@@ -15,16 +15,16 @@ const posts = [
     content: [
       {
         type: "paragraph",
-        content: "Fala galeraa 👋 ",
+        text: "Fala galeraa 👋 ",
       },
       {
         type: "paragraph",
-        content:
+        text:
           "Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀",
       },
       {
         type: "link",
-        content: "👉 jane.design/doctorcare",
+        text: "👉 jane.design/doctorcare",
       },
     ],
     publishedAt: new Date("2023-11-07 21:00:00"),
@@ -39,16 +39,16 @@ const posts = [
     content: [
       {
         type: "paragraph",
-        content: "Fala galeraa 👋 ",
+        text: "Fala galeraa 👋 ",
       },
       {
         type: "paragraph",
-        content:
+        text:
           "Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀",
       },
       {
         type: "link",
-        content: "👉 jane.design/doctorcare",
+        text: "👉 jane.design/doctorcare",
       },
     ],
     publishedAt: new Date("2023-11-08 06:00:00"),
